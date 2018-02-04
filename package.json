@@ -1,51 +1,98 @@
 {
-  "name": "react-app-template",
-  "version": "1.0.0",
-  "description": "A simple template for a React, Node, Mongo app",
-  "main": "index.js",
-  "dependencies": {
-    "axios": "^0.16.2",
-    "babel-loader": "^7.1.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "bcrypt": "^1.0.2",
-    "body-parser": "^1.17.2",
-    "config": "^1.26.1",
-    "cors": "^2.8.3",
-    "css-loader": "^0.28.4",
-    "express": "^4.15.3",
-    "file-loader": "^0.11.2",
-    "html-webpack-plugin": "^2.29.0",
-    "material-ui": "^0.18.6",
-    "mongoose": "^4.11.1",
-    "node-sass": "^4.5.3",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-router-dom": "^4.1.1",
-    "react-tap-event-plugin": "^2.0.1",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.18.2",
-    "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.5.0",
-    "yes-https": "0.0.4"
-  },
+  "name": "crypto-app",
+  "version": "0.0.1",
+  "description": "An app to monitor crypto trends",
   "scripts": {
-    "start": "node index.js",
-    "build": "webpack --watch --config ./webpack.deployment.config.js --progress --color",
-    "dev-start": "webpack-dev-server"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
+    "start": "serve build -s -c 1",
+    "prestart": "npm run build",
+    "build": "cross-env NODE_ENV=production webpack --progress",
+    "prebuild": "mkdirp build && ncp src/assets build/assets",
+    "test": "npm run -s lint && jest --coverage",
+    "test:watch": "npm run -s test -- --watch",
+    "lint": "eslint src test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ColinLMacLeod1/react-app-template.git"
-  },
-  "engines": {
-    "node": "8.0.0",
-    "npm": "5.0.3"
-  },
-  "author": "Colin MacLeod",
+  "keywords": [
+    "crypto",
+    "trading"
+  ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ColinLMacLeod1/react-app-template/issues"
+  "author": "Colin MacLeod",
+  "jest": {
+    "setupFiles": [
+      "./test/setup.js"
+    ],
+    "testURL": "http://localhost:8080",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy",
+      "^react$": "preact-compat",
+      "^react-dom$": "preact-compat"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ]
   },
-  "homepage": "https://github.com/ColinLMacLeod1/react-app-template#readme"
+  "devDependencies": {
+    "autoprefixer": "^7.0.1",
+    "babel": "^6.5.2",
+    "babel-core": "^6.24.0",
+    "babel-eslint": "^7.2.2",
+    "babel-jest": "^20.0.0",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.24.0",
+    "babel-runtime": "^6.11.6",
+    "chai": "^4.0.2",
+    "copy-webpack-plugin": "^4.0.1",
+    "core-js": "^2.4.1",
+    "cross-env": "^5.0.1",
+    "css-loader": "^0.28.0",
+    "eslint": "^4.1.0",
+    "eslint-plugin-jest": "^20.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^0.11.1",
+    "html-webpack-plugin": "^2.28.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^20.0.0",
+    "json-loader": "^0.5.4",
+    "less": "^2.7.1",
+    "less-loader": "^4.0.3",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "offline-plugin": "^4.7.0",
+    "postcss-loader": "^2.0.3",
+    "preact-jsx-chai": "^2.2.1",
+    "raw-loader": "^0.5.1",
+    "regenerator-runtime": "^0.10.3",
+    "replace-bundle-webpack-plugin": "^1.0.0",
+    "script-ext-html-webpack-plugin": "^1.3.4",
+    "sinon": "^2.1.0",
+    "sinon-chai": "^2.9.0",
+    "source-map-loader": "^0.2.1",
+    "style-loader": "^0.18.1",
+    "url-loader": "^0.6.1",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.4.4"
+  },
+  "dependencies": {
+    "preact": "^8.1.0",
+    "preact-compat": "^3.15.0",
+    "preact-render-to-string": "^3.6.0",
+    "preact-router": "^2.5.1",
+    "promise-polyfill": "^6.0.2",
+    "proptypes": "^1.0.0",
+    "serve": "^6.0.0"
+  }
 }
